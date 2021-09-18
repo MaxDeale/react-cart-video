@@ -7,7 +7,6 @@ export const ProductContainerStyle = styled.div`
   border: 1px solid black;
   border-radius: 7px;
   background-color: ${(props) => (props.primary ? '#919aa1' : '#343a40')};
-  color: ${(props) => (props.primary ? '#343a40' : '#919aa1')};
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 `
@@ -15,7 +14,6 @@ export const ProductContainerStyle = styled.div`
 export const ProductItemStyle = styled.div`
   width: 300px;
   background-color: ${(props) => (props.primary ? 'white' : '#919aa1')};
-  color: ${(props) => (props.primary ? '#919aa1' : '#343a40')};
   margin: 2rem;
   padding: 1rem;
 `
@@ -24,7 +22,6 @@ export const PageHeading = styled.h1`
   margin: 45px auto;
   text-align: center;
   font-size: 4rem;
-  color: ${(props) => (props.primary ? '#1a1a1a' : '#6f42c1')};
 `
 export const CartAddButton = styled.button`
   background-color: ${(props) => (props.primary ? 'green' : 'red')};
@@ -37,6 +34,7 @@ export const CartAddButton = styled.button`
   &:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
     border: 1px solid yellow;
   }
 `
@@ -49,14 +47,20 @@ export const NavBarStyle = styled.nav`
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
-  & ul {
-    margin: 0 auto;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
     display: flex;
+    list-style: none;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
   }
-  & li {
-    & a {
+  li {
+    margin: 0 auto;
+    a {
       font-size: 2rem;
       text-decoration: none;
       transition: all 1s;
@@ -69,6 +73,5 @@ export const NavBarStyle = styled.nav`
         border-radius: 10px;
       }
     }
-    list-style: none;
   }
 `

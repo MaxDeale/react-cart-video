@@ -55,4 +55,15 @@ export const CartInfoStyle = styled.div`
   h4 {
     font-weight: 100;
   }
+  input[type='number'] {
+    height: 30px;
+    padding: 1rem;
+    text-align: center;
+    border: none;
+  }
+
+  input[type='number']:hover::-webkit-inner-spin-button {
+    width: 14px;
+    height: 30px;
+  }
 `

@@ -1,38 +1,30 @@
-import React from "react"
-import { ProductItemStyle, CartAddButton } from "../../styles/ProductScreen"
-import { useDispatch } from "react-redux"
-import { addProductToCart } from "../../actions/cartActions"
+import React from 'react'
+import { ProductItemStyle, CartAddButton } from '../../styles/ProductScreen'
+import { useDispatch } from 'react-redux'
+import { addProductToCart } from '../../actions/cartActions'
 
 const ProductItem = ({ item }) => {
   const dispatch = useDispatch()
-
   const addToCartHandler = () => {
     dispatch(addProductToCart(item))
-    console.log(item)
   }
 
   return (
     <ProductItemStyle primary>
-      <img
-        style={{ width: "100px" }}
-        className="product-image"
-        src={item.image}
-        alt={item.title}
-      />
+      <img style={{ width: '100px' }} className="product-image" src={item.image} alt={item.title} />
       <h3
         style={{
-          color: "brown",
-          border: "1px solid black",
-          borderRadius: "2px",
-          padding: "1rem",
+          border: '1px solid black',
+          borderRadius: '2px',
+          padding: '1rem'
         }}
       >
         {item.title}
       </h3>
       <p
         style={{
-          fontSize: "30px",
-          color: "black",
+          fontSize: '30px',
+          color: 'black'
         }}
       >
         R{item.price}
@@ -40,8 +32,8 @@ const ProductItem = ({ item }) => {
       <p>{item.qtyInStock}</p>
       <p
         style={{
-          fontSize: "10px",
-          color: "black",
+          fontSize: '10px',
+          color: 'black'
         }}
       >
         {item.description}

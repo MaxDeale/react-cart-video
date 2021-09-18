@@ -9,9 +9,8 @@ import {
   CART_ITEM_REMOVE_SUCCESS,
   CART_ITEM_REMOVE_FAIL
 } from '../constants/cartConstants'
-import nextId from 'react-id-generator'
 import db from '../firebase/config'
-import { collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
 
 export const listCartItems = () => async (dispatch) => {
   let cartData = []
@@ -25,7 +24,6 @@ export const listCartItems = () => async (dispatch) => {
     cartData = await getCartItems(db)
 
     dispatch({ type: CART_LIST_REQUEST })
-    console.log(cartData)
 
     dispatch({ type: CART_LIST_SUCCESS, payload: cartData })
   } catch (error) {
@@ -39,30 +37,41 @@ export const listCartItems = () => async (dispatch) => {
 
 export const addProductToCart = (new_cart_item) => async (dispatch) => {
   const newCartProduct = {}
+  const newItemId = new_cart_item.title.slice(0, 4)
 
   try {
     dispatch({
       type: CART_ITEM_ADD_REQUEST
     })
 
-    console.log(new_cart_item.title)
+    const cartItemRef = doc(db, 'cartItems', newItemId)
 
-    const newItemId = nextId()
+    const docSnap = await getDoc(cartItemRef)
 
-    await setDoc(doc(db, 'cartItems', newItemId), {
-      id: newItemId,
-      title: new_cart_item.title,
-      price: new_cart_item.price,
-      image: new_cart_item.image,
-      qtyInCart: 1
-    })
+    if (docSnap.exists()) {
+      const existItem = docSnap.data()
+      alert(existItem.title + ' already in cart')
+      dispatch({
+        type: CART_ITEM_ADD_SUCCESS,
+        payload: existItem
+      })
+    } else {
+      // doc.data() will be undefined in this case
+      console.log('No such document!')
+      await setDoc(doc(db, 'cartItems', newItemId), {
+        id: newItemId,
+        title: new_cart_item.title,
+        price: new_cart_item.price,
+        image: new_cart_item.image,
+        qtyInCart: 1
+      })
+      alert('Item' + new_cart_item.title + ' successfully added')
 
-    alert('Item' + new_cart_item.title + ' successfully added')
-
-    dispatch({
-      type: CART_ITEM_ADD_SUCCESS,
-      payload: newCartProduct
-    })
+      dispatch({
+        type: CART_ITEM_ADD_SUCCESS,
+        payload: newCartProduct
+      })
+    }
   } catch (error) {
     alert('Failed To Add ' + new_cart_item.title + error)
     dispatch({
@@ -76,8 +85,6 @@ export const addProductToCart = (new_cart_item) => async (dispatch) => {
 export const deleteItemFromCart = (cart_item_id) => async (dispatch) => {
   try {
     dispatch({ type: CART_ITEM_REMOVE_REQUEST })
-
-    console.log(cart_item_id)
 
     await deleteDoc(doc(db, 'cartItems', cart_item_id))
 

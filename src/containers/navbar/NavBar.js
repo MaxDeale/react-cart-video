@@ -1,6 +1,6 @@
-import React from "react"
-import { NavBarStyle } from "../../styles/ProductScreen"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { NavBarStyle } from '../../styles/ProductScreen'
+import { Link } from 'react-router-dom'
 
 const NavBar = () => {
   return (
