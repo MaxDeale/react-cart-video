@@ -86,19 +86,13 @@ export const addProductToCart = (new_cart_item) => async (dispatch) => {
   }
 }
 
-export const updateCartQty = (cart_item, qty) => async (dispatch) => {
+export const updateCartQty = (cart_item_id, qty) => async (dispatch) => {
   try {
     dispatch({
       type: CART_ITEM_UPDATE_REQUEST
     })
 
-    if (cart_item.qtyInCart > qty) {
-      qty--
-    } else {
-      qty++
-    }
-
-    await updateDoc(doc(db, 'cartItems', cart_item.id), {
+    await updateDoc(doc(db, 'cartItems', cart_item_id), {
       qtyInCart: qty
     })
 
@@ -121,6 +115,8 @@ export const deleteItemFromCart = (cart_item_id) => async (dispatch) => {
     await deleteDoc(doc(db, 'cartItems', cart_item_id))
 
     alert(cart_item_id + ' was successfully deleted')
+
+    window.location.reload()
 
     dispatch({ type: CART_ITEM_REMOVE_SUCCESS })
   } catch (error) {
